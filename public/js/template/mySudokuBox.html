@@ -1,6 +1,3 @@
-<div ng-repeat="n in [[1,2,3],[4,5,6],[7,8,9]]">
-    <div ng-repeat="a in n" class="row">
-        {{a}}1
-    </div>
+<div class="sudoku-cell-row" ng-repeat="rowData in boxData">
+    <div class="sudoku-cell" ng-repeat="cellData in rowData" my-sudoku-cell cell-data="cellData"></div>
 </div>
-<div>lala</div>

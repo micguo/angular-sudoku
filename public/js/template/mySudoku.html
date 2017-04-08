@@ -1,2 +1,3 @@
-<my-sudoku-box></my-sudoku-box>
-<div>haha</div>
+<div class="sudoku-box-row" ng-repeat="boxRowData in sodukuData track by $index">
+    <div class="sudoku-box" my-sudoku-box box-data="boxData" ng-repeat="boxData in boxRowData"></div>
+</div>
