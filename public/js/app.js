@@ -1,68 +1,75 @@
 'use strict';
 
 var app = angular.module('sudokuApp', []);
-app.controller('MainCtrl', function($scope) {
-    $scope.sodukuData = [
+app.controller('MainCtrl', function($scope, sudokuCal) {
+
+    $scope.sudokuQuestion = [
         [
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [4,0,9],
+                [0,0,0],
+                [8,0,3]
             ],
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [0,0,0],
+                [0,4,0],
+                [2,0,0]
             ],
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [0,0,0],
+                [6,0,0],
+                [0,0,9]
             ]
         ],
         [
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [0,0,0],
+                [0,5,0],
+                [3,0,0]
             ],
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [0,6,3],
+                [0,1,0],
+                [8,2,0]
             ],
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [0,0,4],
+                [0,7,0],
+                [0,0,0]
             ]
         ],
         [
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [9,0,0],
+                [0,0,1],
+                [0,0,0]
             ],
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [0,0,8],
+                [0,5,0],
+                [0,0,0]
             ],
             [
-                [1,2,3],
-                [4,5,6],
-                [7,8,9]
+                [4,0,2],
+                [0,0,0],
+                [7,0,1]
             ]
         ]
     ];
-    $scope.data = 'haha';
+    $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
+
 })
 .directive('mySudokuCell', function() {
     return {
         scope: {
             cellData: "="
         },
-        templateUrl: "js/template/mySudokuCell.html"
+        templateUrl: "js/template/mySudokuCell.html",
+        link: function(scope, elem, attrs) {
+            elem.bind('click', function() {
+                console.log(scope.cellData);
+            });
+        }
     }
 })
 .directive('mySudokuBox', function() {
@@ -71,15 +78,14 @@ app.controller('MainCtrl', function($scope) {
             boxData: "="
         },
         templateUrl: "js/template/mySudokuBox.html",
-        link: function(scope, elem, attrs) {
-            elem.bind('click', function() {
-                console.log(scope);
-            });
-        }
+
     }
 })
 .directive('mySudoku', function() {
     return {
+        scope: {
+            sudokuData: "="
+        },
         templateUrl: "/js/template/mySudoku.html"
     };
 });

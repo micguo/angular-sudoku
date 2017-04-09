@@ -9,9 +9,12 @@
     <body>
         <div ng-app="sudokuApp">
             <div ng-controller="MainCtrl">
-                <div class="my-sudoku" my-sudoku></div>
+                <div class="my-sudoku" my-sudoku sudoku-data="sudokuQuestion"></div>
+                <br /><br />
+                <div class="my-sudoku" my-sudoku sudoku-data="sudokuResult"></div>
             </div>
         </div>
     </body>
     <script src="js/app.js"></script>
+    <script src="js/sudokuCal.js"></script>
 </html>
