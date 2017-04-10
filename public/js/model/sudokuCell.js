@@ -46,5 +46,3 @@ SudokuCell.prototype.copy = function(org) {
 
     return this;
 };
-
-Su
