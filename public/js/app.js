@@ -2,7 +2,6 @@
 
 var app = angular.module('sudokuApp', []);
 app.controller('MainCtrl', function($scope, sudokuCal) {
-
     $scope.sudokuQuestion = [
         [
             [
@@ -56,20 +55,18 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             ]
         ]
     ];
-    $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
-
+    sudokuCal.initQuestion($scope.sudokuQuestion);
+    $scope.sudokuResult = sudokuCal.initResult($scope.sudokuQuestion);
+    $scope.calculate = function() {
+        $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
+    }
 })
 .directive('mySudokuCell', function() {
     return {
         scope: {
             cellData: "="
         },
-        templateUrl: "js/template/mySudokuCell.html",
-        link: function(scope, elem, attrs) {
-            elem.bind('click', function() {
-                console.log(scope.cellData);
-            });
-        }
+        templateUrl: "js/template/mySudokuCell.html"
     }
 })
 .directive('mySudokuBox', function() {
@@ -77,13 +74,13 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
         scope: {
             boxData: "="
         },
-        templateUrl: "js/template/mySudokuBox.html",
-
+        templateUrl: "js/template/mySudokuBox.html"
     }
 })
 .directive('mySudoku', function() {
     return {
         scope: {
+            headingText: "@",
             sudokuData: "="
         },
         templateUrl: "/js/template/mySudoku.html"

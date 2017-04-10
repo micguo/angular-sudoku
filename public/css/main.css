@@ -1,9 +1,12 @@
 .sudoku-cell {
-    border: 0.1em solid black;
+    background-color: white;
+    border: 0.1em solid #009aa6;
     display: block;
     padding: 1em;
     width: 3em;
     height: 3em;
+    font-family: 'Special Elite', cursive;
+    font-weight: bold;
 }
 
 .sudoku-cell-row {
@@ -12,12 +15,69 @@
 
 .sudoku-box-row {
     display: flex;
+    width: 27em;
+    margin: auto;
 }
 
 .sudoku-box {
+    width: 9em
 
+}
+
+.my-sudoku-button-container {
+    height: 12em;
+}
+
+.my-sudoku-button-container .btn {
+    background-color: #009aa6;
+    border-color: #009aa6;
+}
+
+.my-sudoku-button-container .btn:active {
+    background-color: #009aa6;
+    border-color: #009aa6;
+}
+
+.my-sudoku-button-container button {
+    position: relative;
+    top: 50%;
+    left: 40%;
 }
 
 .my-sudoku {
 
+}
+
+.my-sudoku .heading-text {
+    width: 27em;
+    margin: auto;
+    text-align: left;
+}
+
+.my-sudoku .heading-text h3 {
+    margin: 0;
+    padding: 0.5em;
+    color: white;
+    background-color: #009aa6;
+    border-radius: 9px 9px 0 0;
+}
+
+.content {
+    margin-top: 5em;
+}
+
+.content-head {
+    margin: 1em 5em;
+}
+
+.content-head h1 {
+    position: relative;
+    display: block;
+    margin:auto;
+    width: 10em;
+}
+
+body {
+    font-size: 20px;
+    background-color: lightgray;
 }

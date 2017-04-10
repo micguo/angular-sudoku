@@ -4,36 +4,29 @@ app.service('sudokuCal', function() {
     this.gussingPointList = [];
     this.unsolvedCellCount = 81;
     this.cal = function(questionData) {
+        this.unsolvedCellCount = 81;
+        this.gussingPointList = [];
         this.init(questionData);
         do {
             this.reRunNeeded = false;
             this.calRow();
             this.calCol();
             this.calBox();
-            console.log(this.unsolvedCellCount);
         } while (this.reRunNeeded);
 
         try {
-            do {
+            while (this.unsolvedCellCount > 0) {
                 var nextGuessingPoint = this.getNextGuessingPoint();
                 this.doGuessing(nextGuessingPoint);
                 this.gussingPointList.push(nextGuessingPoint);
-                // console.log(JSON.stringify(this.gussingPointList));
                 do {
                     try {
-                        console.log("ran.");
                         this.reRunNeeded = false;
                         this.calRow();
                         this.calCol();
                         this.calBox();
-                        console.log(this.unsolvedCellCount);
-                        // if (this.unsolvedCellCount == 42) {
-                        //     throw new Error();
-                        // }
                     } catch (e) {
-
                         if (e instanceof SudokuCellGuessingFailureException) {
-                            console.log(e);
                             // If current guessing point has no more possible value, fall back one step
                             while(nextGuessingPoint.possibleVal.length === 0) {
                                 nextGuessingPoint = this.gussingPointList.pop();
@@ -42,19 +35,41 @@ app.service('sudokuCal', function() {
                                 }
                             }
                             this.sudokuDataCopy(nextGuessingPoint.cacheSudokuData, this.resultData);
-                            console.log(JSON.stringify(this.resultData));
                             this.unsolvedCellCount = nextGuessingPoint.unsolvedCellCount;
                             this.doGuessing(nextGuessingPoint);
                             this.reRunNeeded = true;
-                            console.log(this.unsolvedCellCount);
                         } else {
                             throw e;
                         }
                     }
                 } while (this.reRunNeeded);
-            } while (this.unsolvedCellCount > 0);
+            }
         } catch (e) {
            alert("something wrong.");
+        }
+        return this.resultData;
+    };
+    this.initQuestion = function(questionData) {
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                for (var k = 0; k < 3; k++) {
+                    for (var v = 0; v < 3; v++) {
+                        questionData[i][j][k][v] = {"value": questionData[i][j][k][v]};
+                    }
+                }
+            }
+        }
+    };
+    this.initResult = function(questionData) {
+        this.resultData = JSON.parse(JSON.stringify(questionData));
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                for (var k = 0; k < 3; k++) {
+                    for (var v = 0; v < 3; v++) {
+                        this.resultData[i][j][k][v] = {"value": 0};
+                    }
+                }
+            }
         }
         return this.resultData;
     };
@@ -73,20 +88,17 @@ app.service('sudokuCal', function() {
                         this.resultData[i][j][k][v].k = k;
                         this.resultData[i][j][k][v].v = v;
 
-                        this.resultData[i][j][k][v].setVal(questionData[i][j][k][v]);
-                        if (questionData[i][j][k][v] === 0) {
+                        this.resultData[i][j][k][v].setVal(questionData[i][j][k][v].value);
+                        if (questionData[i][j][k][v].value === 0) {
                             this.resultData[i][j][k][v].possibleVal = [1, 2, 3, 4, 5, 6, 7, 8, 9];
                         } else {
                             this.resultData[i][j][k][v].possibleVal = null;
                             this.unsolvedCellCount--;
                         }
-
-                        questionData[i][j][k][v] = {"value": questionData[i][j][k][v]};
                     }
                 }
             }
         }
-
     };
     this.calRow = function() {
         for (var i = 0; i < 3; i++) {
@@ -190,9 +202,6 @@ app.service('sudokuCal', function() {
     };
     this.doGuessing = function(guessingPoint)
     {
-        console.log("Guessing ");
-        console.log(JSON.stringify(guessingPoint.location));
-        console.log(JSON.stringify(guessingPoint.possibleVal));
         var location = guessingPoint.location;
         var targetCell = this.resultData[location.i][location.j][location.k][location.v];
         targetCell.value = guessingPoint.possibleVal.pop();
