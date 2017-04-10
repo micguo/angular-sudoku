@@ -2,7 +2,7 @@
 
 var app = angular.module('sudokuApp', []);
 app.controller('MainCtrl', function($scope, sudokuCal) {
-    $scope.sudokuQuestion = [
+    var sudokuQuestionArray = [
         [
             [
                 [0,0,0],
@@ -55,7 +55,7 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             ]
         ]
     ];
-    sudokuCal.initQuestion($scope.sudokuQuestion);
+    $scope.sudokuQuestion = SudokuCell.initAllCellsByArray(sudokuQuestionArray);
     $scope.sudokuResult = sudokuCal.initResult($scope.sudokuQuestion);
     $scope.calculate = function() {
         $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
