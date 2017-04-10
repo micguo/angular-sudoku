@@ -20,7 +20,3 @@ GuessingPoint.prototype.setPossibleVal = function(possibleVal) {
 GuessingPoint.prototype.setCacheSudokuData = function(org) {
     this.cacheSudokuData = SudokuCell.copyAllCells(org);
 };
-
-GuessingPoint.prototype.setUnsolvedCellCount  = function(unsolvedCellCount) {
-    this.unsolvedCellCount = unsolvedCellCount;
-};

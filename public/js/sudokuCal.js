@@ -4,23 +4,14 @@ app.service('sudokuCal', function() {
     this.resultData = null;
     this.reRunNeeded = true;
     this.gussingPointList = [];
-    this.unsolvedCellCount = 81;
+
     this.cal = function(questionData) {
         this.gussingPointList = [];
         this.resultData = SudokuCell.copyAllCells(questionData);
-        this.unsolvedCellCount = SudokuCell.getUnsolvedCellCount(this.resultData);
-        do {
-            this.reRunNeeded = false;
-            this.calRow();
-            this.calCol();
-            this.calBox();
-        } while (this.reRunNeeded);
-
+        var nextGuessingPoint = null;
         try {
+            // We won't back off until we get a result!
             while (SudokuCell.getUnsolvedCellCount(this.resultData) > 0) {
-                var nextGuessingPoint = this.getNextGuessingPoint();
-                this.doGuessing(nextGuessingPoint);
-                this.gussingPointList.push(nextGuessingPoint);
                 do {
                     try {
                         this.reRunNeeded = false;
@@ -33,18 +24,28 @@ app.service('sudokuCal', function() {
                             while(nextGuessingPoint.possibleVal.length === 0) {
                                 nextGuessingPoint = this.gussingPointList.pop();
                                 if (nextGuessingPoint === undefined) {
+                                    alert("No possbile solution.");
                                     throw new Error("No possible solution.");
                                 }
                             }
                             this.resultData = SudokuCell.copyAllCells(nextGuessingPoint.cacheSudokuData);
-                            this.unsolvedCellCount = nextGuessingPoint.unsolvedCellCount;
                             this.doGuessing(nextGuessingPoint);
                             this.reRunNeeded = true;
                         } else {
                             throw e;
                         }
                     }
-                } while (this.reRunNeeded);
+                } while (
+                    // Rerun if we had made some progress in this loop.
+                    this.reRunNeeded
+                );
+
+                if (SudokuCell.getUnsolvedCellCount(this.resultData) > 0) {
+                    // We can't solve the problem without guessing at this point, so do some guessing work
+                    nextGuessingPoint = this.getNextGuessingPoint();
+                    this.doGuessing(nextGuessingPoint);
+                    this.gussingPointList.push(nextGuessingPoint);
+                }
             }
         } catch (e) {
            alert("something wrong.");
@@ -58,6 +59,7 @@ app.service('sudokuCal', function() {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
                     for (var v = 0; v < 3; v++) {
+                        // Show the result as empty box
                         this.resultData[i][j][k][v] = {"value": 0};
                     }
                 }
@@ -76,7 +78,6 @@ app.service('sudokuCal', function() {
                                     if (this.resultData[i][x][k][y].possibleVal !== null && !(x === j && y === v)) {
                                         var solved = this.resultData[i][x][k][y].removePossibleVal(this.resultData[i][j][k][v].value);
                                         if (solved) {
-                                            this.unsolvedCellCount--;
                                             this.reRunNeeded = true;
                                         }
                                     }
@@ -99,7 +100,6 @@ app.service('sudokuCal', function() {
                                     if (this.resultData[x][j][y][v].possibleVal !== null && !(x === i && y === k)) {
                                         var solved = this.resultData[x][j][y][v].removePossibleVal(this.resultData[i][j][k][v].value);
                                         if (solved) {
-                                            this.unsolvedCellCount--;
                                             this.reRunNeeded = true;
                                         }
                                     }
@@ -122,7 +122,6 @@ app.service('sudokuCal', function() {
                                     if (this.resultData[i][j][x][y].possibleVal !== null && !(x === k && y === v)) {
                                         var solved = this.resultData[i][j][x][y].removePossibleVal(this.resultData[i][j][k][v].value);
                                         if (solved) {
-                                            this.unsolvedCellCount--;
                                             this.reRunNeeded = true;
                                         }
                                     }
@@ -160,7 +159,6 @@ app.service('sudokuCal', function() {
         nextGuessingPoint.setLocation(point.i, point.j, point.k, point.v);
         nextGuessingPoint.setCacheSudokuData(this.resultData);
         nextGuessingPoint.setPossibleVal(this.resultData[point.i][point.j][point.k][point.v].possibleVal.slice(0));
-        nextGuessingPoint.setUnsolvedCellCount(this.unsolvedCellCount);
 
         return nextGuessingPoint;
     };
@@ -169,7 +167,6 @@ app.service('sudokuCal', function() {
         var targetCell = this.resultData[location.i][location.j][location.k][location.v];
         targetCell.value = guessingPoint.possibleVal.pop();
         targetCell.possibleVal = [targetCell.value];
-        this.unsolvedCellCount--;
     };
 });
 
