@@ -1,0 +1,3 @@
+<div class="sudoku-cell-row" ng-repeat="rowData in boxData">
+    <div class="sudoku-cell" ng-repeat="cellData in rowData track by $index" my-sudoku-cell cell-data="cellData"></div>
+</div>

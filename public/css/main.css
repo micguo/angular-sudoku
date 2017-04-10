@@ -1,0 +1,23 @@
+.sudoku-cell {
+    border: 0.1em solid black;
+    display: block;
+    padding: 1em;
+    width: 3em;
+    height: 3em;
+}
+
+.sudoku-cell-row {
+    display: flex;
+}
+
+.sudoku-box-row {
+    display: flex;
+}
+
+.sudoku-box {
+
+}
+
+.my-sudoku {
+
+}
