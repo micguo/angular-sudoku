@@ -74,8 +74,8 @@ SudokuCell.initAllCellsByArray = function(orgArray) {
                     des[i][j][k][v].k = k;
                     des[i][j][k][v].v = v;
 
-                    des[i][j][k][v].setVal(orgArray[i][j][k][v]);
-                    if (orgArray[i][j][k][v] !== 0) {
+                    des[i][j][k][v].setVal(orgArray[i][j][k][v].value);
+                    if (orgArray[i][j][k][v].value !== 0) {
                         des[i][j][k][v].possibleVal = null;
                     } else {
                         des[i][j][k][v].possibleVal = [1,2,3,4,5,6,7,8,9];

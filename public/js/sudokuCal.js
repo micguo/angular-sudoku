@@ -7,7 +7,7 @@ app.service('sudokuCal', function() {
 
     this.cal = function(questionData) {
         this.gussingPointList = [];
-        this.resultData = SudokuCell.copyAllCells(questionData);
+        this.resultData = SudokuCell.copyAllCells(SudokuCell.initAllCellsByArray(questionData));
         var nextGuessingPoint = null;
         try {
             // We won't back off until we get a result!
@@ -46,12 +46,27 @@ app.service('sudokuCal', function() {
                     this.doGuessing(nextGuessingPoint);
                     this.gussingPointList.push(nextGuessingPoint);
                 }
+
             }
         } catch (e) {
            alert("something wrong.");
            throw e;
         }
         return this.resultData;
+    };
+    this.initQuestion = function(questionArray){
+        var des;
+        des = JSON.parse(JSON.stringify(questionArray));
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                for (var k = 0; k < 3; k++) {
+                    for (var v = 0; v < 3; v++) {
+                        des[i][j][k][v] = {"value": questionArray[i][j][k][v]};
+                    }
+                }
+            }
+        }
+        return des;
     };
     this.initResult = function(questionData) {
         this.resultData = JSON.parse(JSON.stringify(questionData));
