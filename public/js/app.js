@@ -56,6 +56,7 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
         ]
     ];
     $scope.sudokuQuestion = sudokuCal.initQuestion(sudokuQuestionArray);
+    $scope.sudokuResult = sudokuCal.initResult($scope.sudokuQuestion);
     $scope.calculate = function() {
         $scope.sudokuResult = sudokuCal.initResult($scope.sudokuQuestion);
         $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
