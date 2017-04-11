@@ -9,6 +9,13 @@
     font-weight: bold;
 }
 
+.sudoku-cell input{
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 1em;
+}
+
 .sudoku-cell-row {
     display: flex;
 }
@@ -60,6 +67,10 @@
     color: white;
     background-color: #009aa6;
     border-radius: 9px 9px 0 0;
+}
+
+.my-sudoku .heading-text h3 button {
+    float: right;
 }
 
 .content {

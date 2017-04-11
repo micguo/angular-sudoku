@@ -1,6 +1,1 @@
-<div ng-if="cellData.value != 0">
-    {{cellData.value}}
-</div>
-<div ng-if="cellData.value == 0">
-
-</div>
+<input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' cast-to-integer="true" ng-model="cellData.value" ng-disabled="!cellEditable" maxlength="1"/>

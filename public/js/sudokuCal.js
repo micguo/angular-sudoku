@@ -7,7 +7,7 @@ app.service('sudokuCal', function() {
 
     this.cal = function(questionData) {
         this.gussingPointList = [];
-        this.resultData = SudokuCell.copyAllCells(questionData);
+        this.resultData = SudokuCell.copyAllCells(SudokuCell.initAllCellsByArray(questionData));
         var nextGuessingPoint = null;
         try {
             // We won't back off until we get a result!
@@ -46,6 +46,7 @@ app.service('sudokuCal', function() {
                     this.doGuessing(nextGuessingPoint);
                     this.gussingPointList.push(nextGuessingPoint);
                 }
+
             }
         } catch (e) {
            alert("something wrong.");
@@ -53,19 +54,33 @@ app.service('sudokuCal', function() {
         }
         return this.resultData;
     };
-    this.initResult = function(questionData) {
-        this.resultData = JSON.parse(JSON.stringify(questionData));
+    this.initQuestion = function(questionArray){
+        var des;
+        des = JSON.parse(JSON.stringify(questionArray));
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                for (var k = 0; k < 3; k++) {
+                    for (var v = 0; v < 3; v++) {
+                        des[i][j][k][v] = {"value": questionArray[i][j][k][v]};
+                    }
+                }
+            }
+        }
+        return des;
+    };
+    this.getEmptyBoard = function(org) {
+        var des = JSON.parse(JSON.stringify(org));
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
                     for (var v = 0; v < 3; v++) {
                         // Show the result as empty box
-                        this.resultData[i][j][k][v] = {"value": 0};
+                        des[i][j][k][v] = {"value": 0};
                     }
                 }
             }
         }
-        return this.resultData;
+        return des;
     };
     this.calRow = function() {
         for (var i = 0; i < 3; i++) {
