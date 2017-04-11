@@ -68,19 +68,19 @@ app.service('sudokuCal', function() {
         }
         return des;
     };
-    this.initResult = function(questionData) {
-        this.resultData = JSON.parse(JSON.stringify(questionData));
+    this.getEmptyBoard = function(org) {
+        var des = JSON.parse(JSON.stringify(org));
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
                     for (var v = 0; v < 3; v++) {
                         // Show the result as empty box
-                        this.resultData[i][j][k][v] = {"value": 0};
+                        des[i][j][k][v] = {"value": 0};
                     }
                 }
             }
         }
-        return this.resultData;
+        return des;
     };
     this.calRow = function() {
         for (var i = 0; i < 3; i++) {

@@ -69,6 +69,10 @@
     border-radius: 9px 9px 0 0;
 }
 
+.my-sudoku .heading-text h3 button {
+    float: right;
+}
+
 .content {
     margin-top: 5em;
 }

@@ -56,9 +56,9 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
         ]
     ];
     $scope.sudokuQuestion = sudokuCal.initQuestion(sudokuQuestionArray);
-    $scope.sudokuResult = sudokuCal.initResult($scope.sudokuQuestion);
+    $scope.sudokuResult = sudokuCal.getEmptyBoard($scope.sudokuQuestion);
     $scope.calculate = function() {
-        $scope.sudokuResult = sudokuCal.initResult($scope.sudokuQuestion);
+        $scope.sudokuResult = sudokuCal.getEmptyBoard($scope.sudokuQuestion);
         $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
     }
 })
@@ -115,6 +115,12 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             sudokuData: "=",
             cellEditable: "="
         },
-        templateUrl: "/js/template/mySudoku.html"
+        templateUrl: "/js/template/mySudoku.html",
+        controller: function ($scope, sudokuCal) {
+            $scope.clear = function() {
+                $scope.sudokuData = sudokuCal.getEmptyBoard($scope.sudokuData);
+                console.log($scope.sudokuData);
+            }
+        }
     };
 });
