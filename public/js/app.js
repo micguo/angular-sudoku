@@ -91,7 +91,6 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             cellEditable: "="
         },
         templateUrl: "js/template/mySudokuCell.html",
-        // require: 'ngModel',
         link: function(scope, elem, attr) {
             elem.click(function(){
                 console.log(scope.cellData);
@@ -108,14 +107,14 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
         templateUrl: "js/template/mySudokuBox.html"
     }
 })
-.directive('mySudoku', function() {
+.directive('mySudokuBoard', function() {
     return {
         scope: {
             headingText: "@",
             sudokuData: "=",
             cellEditable: "="
         },
-        templateUrl: "/js/template/mySudoku.html",
+        templateUrl: "/js/template/mySudokuBoard.html",
         controller: function ($scope, sudokuCal) {
             $scope.clear = function() {
                 $scope.sudokuData = sudokuCal.getEmptyBoard($scope.sudokuData);

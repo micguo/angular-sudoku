@@ -1,3 +1,7 @@
-<div class="sudoku-cell-row" ng-repeat="rowData in boxData">
-    <div class="sudoku-cell" ng-repeat="cellData in rowData track by $index" my-sudoku-cell cell-data="cellData" cell-editable="cellEditable"></div>
+<div class="sudoku-cell-row" ng-repeat="rowData in boxData track by $index">
+    <div my-sudoku-cell cell-data="cellData"
+         class="sudoku-cell cell-row-{{$parent.$index}} cell-col-{{$index}}"
+         ng-repeat="cellData in rowData track by $index"
+         cell-editable="cellEditable">
+    </div>
 </div>

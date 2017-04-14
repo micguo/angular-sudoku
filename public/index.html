@@ -11,10 +11,10 @@
         <div class="content" ng-app="sudokuApp">
             <div class="row content-head"><h1>Sudoku Solver</h1></div>
             <div class="row" ng-controller="MainCtrl">
-                <div class="col-md-12 col-md-5 text-center my-sudoku" my-sudoku heading-text="Question" sudoku-data="sudokuQuestion" cell-editable="true">
+                <div id="questionBoard" class="col-md-12 col-md-5 text-center my-sudoku" my-sudoku-board heading-text="Question" sudoku-data="sudokuQuestion" cell-editable="true">
                 </div>
                 <div class="col-sm-12 col-md-2 my-sudoku-button-container"><button ng-click="calculate()"  id='sudokuCalBtn' class="btn btn-primary btn-lg">Solve</button></div>
-                <div class="col-sm-12 col-md-5 text-center my-sudoku" my-sudoku heading-text="Answer" sudoku-data="sudokuResult" cell-editable="false"></div>
+                <div id="resultBoard" class="col-sm-12 col-md-5 text-center my-sudoku" my-sudoku-board heading-text="Answer" sudoku-data="sudokuResult" cell-editable="false"></div>
             </div>
         </div>
     </body>
