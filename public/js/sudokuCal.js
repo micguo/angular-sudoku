@@ -155,7 +155,7 @@ app.service('sudokuCal', function() {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
                     for (var v = 0; v < 3; v++) {
-                        if (this.resultData[i][j][k][v].value === 0 && this.resultData[i][j][k][v].possibleVal.length < minPossibleVal)
+                        if (this.resultData[i][j][k][v].value === 0 && this.resultData[i][j][k][v].possibleVal.length <= minPossibleVal)
                         {
                             minPossibleVal = this.resultData[i][j][k][v].possibleVal.length;
                             point.i = i;
@@ -167,9 +167,7 @@ app.service('sudokuCal', function() {
                 }
             }
         }
-        if (minPossibleVal === 9) {
-            throw new Error("Something wrong.");
-        }
+
         var nextGuessingPoint = new GuessingPoint();
         nextGuessingPoint.setLocation(point.i, point.j, point.k, point.v);
         nextGuessingPoint.setCacheSudokuData(this.resultData);
