@@ -1,6 +1,6 @@
 .sudoku-cell {
     background-color: white;
-    border: 0.1em solid #009aa6;
+    border: 0.1em solid lightgray;
     display: block;
     padding: 1em;
     width: 3em;
@@ -22,13 +22,13 @@
 
 .sudoku-box-row {
     display: flex;
-    width: 27em;
+    width: 27.6em;
     margin: auto;
 }
 
 .sudoku-box {
-    width: 9em
-
+    width: 9.5em;
+    border: 0.1em solid black;
 }
 
 .my-sudoku-button-container {
@@ -56,7 +56,7 @@
 }
 
 .my-sudoku .heading-text {
-    width: 27em;
+    width: 27.6em;
     margin: auto;
     text-align: left;
 }
