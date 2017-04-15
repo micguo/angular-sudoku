@@ -114,10 +114,6 @@ app.service('sudokuCal', function() {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
                     for (var v = 0; v < 3; v++) {
-                        if (i === 0 && j === 1 && k === 0 && v === 1) {
-
-                            console.log(questionArray[i][j][k][v]);
-                        }
                         if (questionArray[i][j][k][v] !== 0) {
                             //Valid question
                             //Valid row
@@ -138,10 +134,6 @@ app.service('sudokuCal', function() {
                                     // Skip itself
                                     if (x === i && y === k) {
                                         continue;
-                                    }
-                                    if (i === 0 && j === 1 && k === 0 && v === 1) {
-                                        console.log(questionArray[x][j][y][v]);
-                                        console.log(questionArray[i][j][k][v]);
                                     }
                                     if (questionArray[x][j][y][v] === questionArray[i][j][k][v]) {
                                         throw new SudokuInvalidQuestionException();
