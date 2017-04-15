@@ -21,45 +21,42 @@ app.service('sudokuCal', function() {
         this.resultData = SudokuCell.copyAllCells(SudokuCell.initAllCellsByArray(questionData));
         // We won't back off until we get a result!
         while (SudokuCell.getUnsolvedCellCount(this.resultData) > 0) {
-            this.innerRun();
+            do {
+                try {
+                    this.reRunNeeded = false;
+                    this.calRow();
+                    this.calCol();
+                    this.calBox();
+                } catch (e) {
+                    if (e instanceof SudokuCellGuessingFailureException) {
+                        // If current guessing point has no more possible value, fall back one step
+                        while(this.currentGussingPoint.possibleVal.length === 0) {
+                            this.currentGussingPoint = this.gussingPointList.pop();
+                            if (this.currentGussingPoint === undefined) {
+                                alert("No possbile solution.");
+                                throw new Error("No possible solution.");
+                            }
+                        }
+                        this.resultData = SudokuCell.copyAllCells(this.currentGussingPoint.cacheSudokuData);
+                        this.doGuessing(this.currentGussingPoint);
+                        this.reRunNeeded = true;
+                    } else {
+                        throw e;
+                    }
+                }
+            } while (
+                // Rerun if we had made some progress in this loop.
+                this.reRunNeeded
+                );
+
+            if (SudokuCell.getUnsolvedCellCount(this.resultData) > 0) {
+                // We can't solve the problem without guessing at this point, so do some guessing work
+                this.currentGussingPoint = this.getNextGuessingPoint();
+                this.doGuessing(this.currentGussingPoint);
+                this.gussingPointList.push(this.currentGussingPoint);
+            }
         }
         return this.resultData;
-    };
-    this.innerRun = function() {
-        do {
-            try {
-                this.reRunNeeded = false;
-                this.calRow();
-                this.calCol();
-                this.calBox();
-            } catch (e) {
-                if (e instanceof SudokuCellGuessingFailureException) {
-                    // If current guessing point has no more possible value, fall back one step
-                    while(this.currentGussingPoint.possibleVal.length === 0) {
-                        this.currentGussingPoint = this.gussingPointList.pop();
-                        if (this.currentGussingPoint === undefined) {
-                            alert("No possbile solution.");
-                            throw new Error("No possible solution.");
-                        }
-                    }
-                    this.resultData = SudokuCell.copyAllCells(this.currentGussingPoint.cacheSudokuData);
-                    this.doGuessing(this.currentGussingPoint);
-                    this.reRunNeeded = true;
-                } else {
-                    throw e;
-                }
-            }
-        } while (
-            // Rerun if we had made some progress in this loop.
-            this.reRunNeeded
-            );
-
-        if (SudokuCell.getUnsolvedCellCount(this.resultData) > 0) {
-            // We can't solve the problem without guessing at this point, so do some guessing work
-            this.currentGussingPoint = this.getNextGuessingPoint();
-            this.doGuessing(this.currentGussingPoint);
-            this.gussingPointList.push(this.currentGussingPoint);
-        }
     };
     this.validateQuestion = function(questionData) {
         for (var i = 0; i < 3; i++) {
