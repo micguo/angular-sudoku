@@ -1,3 +1,5 @@
+'use strict';
+
 describe('sudoku integration test', function() {
     it('it should able to be cleared', function() {
         browser.get('http://192.168.10.10/');
