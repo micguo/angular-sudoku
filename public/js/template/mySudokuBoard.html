@@ -3,10 +3,12 @@
     <button ng-click="clear()" class="clear-button btn btn-danger" ng-if="cellEditable">Clear</button>
 </h3>
 </div>
-<div class="sudoku-box-row" ng-repeat="boxRowData in sudokuData track by $index">
-    <div my-sudoku-box box-data="boxData"
-         ng-repeat="boxData in boxRowData track by $index"
-         class="sudoku-box box-row-{{$parent.$index}} box-col-{{$index}}"
-         cell-editable="cellEditable">
+<div class="sudoku-board">
+    <div class="sudoku-box-row" ng-repeat="boxRowData in sudokuData track by $index">
+        <div my-sudoku-box box-data="boxData"
+             ng-repeat="boxData in boxRowData track by $index"
+             class="sudoku-box box-row-{{$parent.$index}} box-col-{{$index}}"
+             cell-editable="cellEditable">
+        </div>
     </div>
 </div>

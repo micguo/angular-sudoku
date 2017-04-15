@@ -22,8 +22,6 @@
 
 .sudoku-box-row {
     display: flex;
-    width: 27.6em;
-    margin: auto;
 }
 
 .sudoku-box {
@@ -51,17 +49,19 @@
     left: 40%;
 }
 
-.my-sudoku {
-
+.sudoku-board {
+    box-shadow: 10px 10px 5px grey;
+    width: 27.6em;
+    margin: auto;
 }
 
-.my-sudoku .heading-text {
+.sudoku-container .heading-text {
     width: 27.6em;
     margin: auto;
     text-align: left;
 }
 
-.my-sudoku .heading-text h3 {
+.sudoku-container .heading-text h3 {
     margin: 0;
     padding: 0.5em;
     color: white;
@@ -69,7 +69,7 @@
     border-radius: 9px 9px 0 0;
 }
 
-.my-sudoku .heading-text h3 button {
+.sudoku-container .heading-text h3 button {
     float: right;
 }
 
