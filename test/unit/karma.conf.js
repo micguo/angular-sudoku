@@ -17,9 +17,9 @@ module.exports = function(config) {
     files: [
         './node_modules/angular/angular.js',
         './node_modules/angular-mocks/angular-mocks.js',
-        './public/js/*.js',
-        './public/js/model/*.js',
-        './test/unit/sudokuCalTest.js'
+        './public/app/*.js',
+        './public/app/model/*.js',
+        './public/app/services/*.js'
     ],
 
 

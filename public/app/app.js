@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('sudokuApp', []);
-app.controller('MainCtrl', function($scope, sudokuCal) {
+app.controller('MainCtrl', function($scope, SudokuCal) {
     var sudokuQuestionArray = [
         [
             [
@@ -55,11 +55,11 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             ]
         ]
     ];
-    $scope.sudokuQuestion = sudokuCal.initQuestion(sudokuQuestionArray);
-    $scope.sudokuResult = sudokuCal.getEmptyBoard($scope.sudokuQuestion);
+    $scope.sudokuQuestion = SudokuCal.initQuestion(sudokuQuestionArray);
+    $scope.sudokuResult = SudokuCal.getEmptyBoard($scope.sudokuQuestion);
     $scope.calculate = function() {
-        $scope.sudokuResult = sudokuCal.getEmptyBoard($scope.sudokuQuestion);
-        $scope.sudokuResult = sudokuCal.cal($scope.sudokuQuestion);
+        $scope.sudokuResult = SudokuCal.getEmptyBoard($scope.sudokuQuestion);
+        $scope.sudokuResult = SudokuCal.cal($scope.sudokuQuestion);
     }
 })
 // This directive is partially copied from http://stackoverflow.com/questions/19894429/converting-angular-ng-model-to-integer-when-writing-to-firebase
@@ -90,7 +90,7 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             cellData: "=",
             cellEditable: "="
         },
-        templateUrl: "js/template/mySudokuCell.html",
+        templateUrl: "/app/template/mySudokuCell.html",
         link: function(scope, elem, attr) {
             elem.click(function(){
                 console.log(scope.cellData);
@@ -104,7 +104,7 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             boxData: "=",
             cellEditable: "="
         },
-        templateUrl: "js/template/mySudokuBox.html"
+        templateUrl: "/app/template/mySudokuBox.html"
     }
 })
 .directive('mySudokuBoard', function() {
@@ -114,10 +114,10 @@ app.controller('MainCtrl', function($scope, sudokuCal) {
             sudokuData: "=",
             cellEditable: "="
         },
-        templateUrl: "/js/template/mySudokuBoard.html",
-        controller: function ($scope, sudokuCal) {
+        templateUrl: "/app/template/mySudokuBoard.html",
+        controller: function ($scope, SudokuCal) {
             $scope.clear = function() {
-                $scope.sudokuData = sudokuCal.getEmptyBoard($scope.sudokuData);
+                $scope.sudokuData = SudokuCal.getEmptyBoard($scope.sudokuData);
                 console.log($scope.sudokuData);
             }
         }

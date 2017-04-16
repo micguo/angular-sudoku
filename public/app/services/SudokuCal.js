@@ -1,6 +1,6 @@
 'use strict';
 
-app.service('sudokuCal', function() {
+app.service('SudokuCal', function() {
     this.resultData = null;
     this.reRunNeeded = true;
     this.gussingPointList = [];

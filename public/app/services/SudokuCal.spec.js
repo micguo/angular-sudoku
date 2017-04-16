@@ -1,7 +1,7 @@
 'use strict';
 
-describe('sudokuCal service', function() {
-    var sudokuCal;
+describe('SudokuCal service', function() {
+    var SudokuCal;
     var sudokuQuestionArray = [
         [
             [
@@ -112,18 +112,18 @@ describe('sudokuCal service', function() {
     // Load sudokuApp module
     beforeEach(angular.mock.module('sudokuApp'));
 
-    beforeEach(inject(function(_sudokuCal_) {
-        sudokuCal = _sudokuCal_;
+    beforeEach(inject(function(_SudokuCal_) {
+        SudokuCal = _SudokuCal_;
     }));
 
     // A simple test to verify the sudokuCal service exists
     it('should exist', function() {
-        expect(sudokuCal).toBeDefined();
+        expect(SudokuCal).toBeDefined();
     });
 
     it('should able to calculate result', function() {
-        var questionData = sudokuCal.initQuestion(sudokuQuestionArray);
-        var actualResult = sudokuCal.cal(questionData);
+        var questionData = SudokuCal.initQuestion(sudokuQuestionArray);
+        var actualResult = SudokuCal.cal(questionData);
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
