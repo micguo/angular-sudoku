@@ -6,6 +6,11 @@ app.service('sudokuCal', function() {
     this.gussingPointList = [];
     this.currentGussingPoint = null;
 
+    /**
+     * Main processing function
+     * @param questionData
+     * @returns {*|null}
+     */
     this.cal = function(questionData) {
         try {
             this.validateQuestion(questionData);
@@ -58,6 +63,11 @@ app.service('sudokuCal', function() {
         }
         return this.resultData;
     };
+
+    /**
+     * Valid the question we got is valid
+     * @param questionData
+     */
     this.validateQuestion = function(questionData) {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
@@ -107,6 +117,12 @@ app.service('sudokuCal', function() {
             }
         }
     };
+
+    /**
+     * Translate question array(numbers) to array(objects) for display
+     * @param questionArray
+     * @returns {*}
+     */
     this.initQuestion = function(questionArray){
         var des;
         des = JSON.parse(JSON.stringify(questionArray));
@@ -114,45 +130,6 @@ app.service('sudokuCal', function() {
             for (var j = 0; j < 3; j++) {
                 for (var k = 0; k < 3; k++) {
                     for (var v = 0; v < 3; v++) {
-                        if (questionArray[i][j][k][v] !== 0) {
-                            //Valid question
-                            //Valid row
-                            for (var x = 0; x < 3; x++) {
-                                for (var y = 0; y < 3; y++) {
-                                    // Skip itself
-                                    if (x === j && y === v) {
-                                        continue;
-                                    }
-                                    if (questionArray[i][x][k][y] === questionArray[i][j][k][v]) {
-                                        throw new SudokuInvalidQuestionException();
-                                    }
-                                }
-                            }
-                            //Valid col
-                            for (x = 0; x < 3; x++) {
-                                for (y = 0; y < 3; y++) {
-                                    // Skip itself
-                                    if (x === i && y === k) {
-                                        continue;
-                                    }
-                                    if (questionArray[x][j][y][v] === questionArray[i][j][k][v]) {
-                                        throw new SudokuInvalidQuestionException();
-                                    }
-                                }
-                            }
-                            //Valid box
-                            for (x = 0; x < 3; x++) {
-                                for (y = 0; y < 3; y++) {
-                                    // Skip itself
-                                    if (x === k && y === v) {
-                                        continue;
-                                    }
-                                    if (questionArray[i][j][x][y] === questionArray[i][j][k][v]) {
-                                        throw new SudokuInvalidQuestionException();
-                                    }
-                                }
-                            }
-                        }
                         des[i][j][k][v] = {"value": questionArray[i][j][k][v]};
                     }
                 }
@@ -160,6 +137,11 @@ app.service('sudokuCal', function() {
         }
         return des;
     };
+
+    /**
+     * Get a empty array(objects) represent an empty sudoku board
+     * @param org
+     */
     this.getEmptyBoard = function(org) {
         var des = JSON.parse(JSON.stringify(org));
         for (var i = 0; i < 3; i++) {
@@ -174,6 +156,10 @@ app.service('sudokuCal', function() {
         }
         return des;
     };
+
+    /**
+     * Use row constraint to narrow down possible solution
+     */
     this.calRow = function() {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
@@ -200,6 +186,10 @@ app.service('sudokuCal', function() {
             }
         }
     };
+
+    /**
+     * Use column constraint to narrow down possible solution
+     */
     this.calCol = function() {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
@@ -226,6 +216,10 @@ app.service('sudokuCal', function() {
             }
         }
     };
+
+    /**
+     * Use box constraint to narrow down possible solution
+     */
     this.calBox = function() {
         for (var i = 0; i < 3; i++) {
             for (var j = 0; j < 3; j++) {
@@ -252,6 +246,11 @@ app.service('sudokuCal', function() {
             }
         }
     };
+
+    /**
+     * Get the next guessing point. Choose the one with least possible value
+     * @returns {GuessingPoint}
+     */
     this.getNextGuessingPoint = function() {
         var minPossibleVal = 9;
         var point = {};
@@ -279,6 +278,11 @@ app.service('sudokuCal', function() {
 
         return nextGuessingPoint;
     };
+
+    /**
+     * Guess a value for a given guessing point.
+     * @param guessingPoint
+     */
     this.doGuessing = function(guessingPoint) {
         var location = guessingPoint.location;
         var targetCell = this.resultData[location.i][location.j][location.k][location.v];
@@ -287,5 +291,15 @@ app.service('sudokuCal', function() {
     };
 });
 
+/**
+ * Exception for failed guessing
+ * @param obj
+ * @constructor
+ */
 function SudokuCellGuessingFailureException(obj) {this.cell = obj}
+
+/**
+ * Exception for
+ * @constructor
+ */
 function SudokuInvalidQuestionException() {}

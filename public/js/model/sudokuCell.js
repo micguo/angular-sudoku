@@ -3,7 +3,11 @@
 function SudokuCell() {
 
 }
-
+/**
+ * Remove possible value from a cell
+ * @param val
+ * @returns {boolean}
+ */
 SudokuCell.prototype.removePossibleVal = function(val){
     if (this.possibleVal.length === 1) {
         if (val === this.possibleVal[0]) {
@@ -23,10 +27,19 @@ SudokuCell.prototype.removePossibleVal = function(val){
     return false;
 };
 
+/**
+ * Set the value for a cell
+ * @param a
+ */
 SudokuCell.prototype.setVal = function(a) {
     this.value = a;
 };
 
+/**
+ * Duplicate a cell object
+ * @param org
+ * @returns {SudokuCell}
+ */
 SudokuCell.prototype.copy = function(org) {
     if (! (org instanceof SudokuCell)) {
         throw new Error("Invalid org object has been given.");
@@ -47,6 +60,10 @@ SudokuCell.prototype.copy = function(org) {
     return this;
 };
 
+/**
+ * Duplicate the whole board
+ * @param org
+ */
 SudokuCell.copyAllCells = function(org) {
     var des = JSON.parse(JSON.stringify(org));
     for (var i = 0; i < 3; i++) {
@@ -62,6 +79,10 @@ SudokuCell.copyAllCells = function(org) {
     return des;
 };
 
+/**
+ * Init a SudokuCell based
+ * @param orgArray
+ */
 SudokuCell.initAllCellsByArray = function(orgArray) {
     var des = JSON.parse(JSON.stringify(orgArray));
     for (var i = 0; i < 3; i++) {
@@ -87,6 +108,11 @@ SudokuCell.initAllCellsByArray = function(orgArray) {
     return des;
 };
 
+/**
+ * Get unsolved cell number from a cell array
+ * @param org
+ * @returns {number}
+ */
 SudokuCell.getUnsolvedCellCount = function(org) {
     var count = 81;
     for (var i = 0; i < 3; i++) {
